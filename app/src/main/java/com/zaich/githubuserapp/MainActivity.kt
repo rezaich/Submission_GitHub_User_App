@@ -3,10 +3,8 @@ package com.zaich.githubuserapp
 import android.content.res.TypedArray
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.ActionBar
 import com.zaich.githubuserapp.databinding.ActivityMainBinding
-import com.zaich.githubuserapp.databinding.ItemLayoutBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,6 +12,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataName: Array<String>
     private lateinit var dataUserName: Array<String>
     private lateinit var dataPhoto: TypedArray
+    private lateinit var dataFollower: Array<String>
+    private lateinit var dataFollowing: Array<String>
+    private lateinit var dataRepository: Array<String>
+    private lateinit var dataLocation: Array<String>
+    private lateinit var dataCompany: Array<String>
     private var list = arrayListOf<UserModel>()
     private lateinit var binding: ActivityMainBinding
 
@@ -22,9 +25,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val actionBar:ActionBar?=supportActionBar
+        actionBar!!.setDisplayShowHomeEnabled(true)
+        actionBar.setIcon(R.mipmap.ic_github_foreground)
+
         showListView()
         prepare()
         addItem()
+
     }
 
     private fun showListView(){
@@ -36,6 +44,11 @@ class MainActivity : AppCompatActivity() {
         dataName= resources.getStringArray(R.array.name)
         dataUserName= resources.getStringArray(R.array.username)
         dataPhoto=resources.obtainTypedArray(R.array.avatar)
+        dataFollower = resources.getStringArray(R.array.followers)
+        dataFollowing = resources.getStringArray(R.array.following)
+        dataRepository = resources.getStringArray(R.array.repository)
+        dataLocation = resources.getStringArray(R.array.location)
+        dataCompany=resources.getStringArray(R.array.company)
     }
 
     private fun addItem() {
@@ -44,6 +57,11 @@ class MainActivity : AppCompatActivity() {
                 dataName[position],
                 dataUserName[position],
                 dataPhoto.getResourceId(position, -1),
+                dataFollower[position],
+                dataFollowing[position],
+                dataRepository[position],
+                dataLocation[position],
+                dataCompany[position]
             )
             list.add(User)
         }
