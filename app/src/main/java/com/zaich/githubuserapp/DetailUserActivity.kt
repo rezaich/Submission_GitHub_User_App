@@ -1,5 +1,6 @@
 package com.zaich.githubuserapp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
@@ -10,7 +11,7 @@ class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDetailUserBinding
 
     companion object{
-        const val EXTRA_USER= "EXTRA USER"
+        const val EXTRA_USER = "EXTRA USER"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvLocation.text = selectUser.location
         binding.tvCompany.text = selectUser.company
 
-        actionBar.setTitle(selectUser.user_name)
+        actionBar.title = selectUser.user_name
 
     }
 

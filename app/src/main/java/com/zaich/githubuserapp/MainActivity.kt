@@ -4,11 +4,11 @@ import android.content.res.TypedArray
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var adapter: UserAdapter
     private lateinit var dataName: Array<String>
     private lateinit var dataUserName: Array<String>
     private lateinit var dataPhoto: TypedArray
@@ -29,18 +29,17 @@ class MainActivity : AppCompatActivity() {
         actionBar!!.setDisplayShowHomeEnabled(true)
         actionBar.setIcon(R.mipmap.ic_github_foreground)
 
+        getListUser()
         showListView()
-        prepare()
-        addItem()
-
     }
 
     private fun showListView(){
-        adapter = UserAdapter(this)
-        binding.lvList.adapter = adapter
+        binding.rvList.layoutManager = LinearLayoutManager(this)
+        val listViewUserAdapter = UserAdapter(list,this)
+        binding.rvList.adapter = listViewUserAdapter
     }
 
-    private fun prepare(){
+    private fun getListUser():ArrayList<UserModel>{
         dataName= resources.getStringArray(R.array.name)
         dataUserName= resources.getStringArray(R.array.username)
         dataPhoto=resources.obtainTypedArray(R.array.avatar)
@@ -49,9 +48,36 @@ class MainActivity : AppCompatActivity() {
         dataRepository = resources.getStringArray(R.array.repository)
         dataLocation = resources.getStringArray(R.array.location)
         dataCompany=resources.getStringArray(R.array.company)
+
+        val listUser = arrayListOf<UserModel>()
+        for (position in dataName.indices) {
+            val user = UserModel(
+                dataName[position],
+                dataUserName[position],
+                dataPhoto.getResourceId(position, -1),
+                dataFollower[position],
+                dataFollowing[position],
+                dataRepository[position],
+                dataLocation[position],
+                dataCompany[position]
+            )
+            list.add(user)
+        }
+        return listUser
     }
 
-    private fun addItem() {
+/*    private fun prepare(){
+        dataName= resources.getStringArray(R.array.name)
+        dataUserName= resources.getStringArray(R.array.username)
+        dataPhoto=resources.obtainTypedArray(R.array.avatar)
+        dataFollower = resources.getStringArray(R.array.followers)
+        dataFollowing = resources.getStringArray(R.array.following)
+        dataRepository = resources.getStringArray(R.array.repository)
+        dataLocation = resources.getStringArray(R.array.location)
+        dataCompany=resources.getStringArray(R.array.company)
+    }*/
+
+/*    private fun addItem() {
         for (position in dataName.indices) {
             val User = UserModel(
                 dataName[position],
@@ -66,5 +92,5 @@ class MainActivity : AppCompatActivity() {
             list.add(User)
         }
         adapter.user = list
-    }
+    }*/
 }

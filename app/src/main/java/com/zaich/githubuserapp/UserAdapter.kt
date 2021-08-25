@@ -3,12 +3,45 @@ package com.zaich.githubuserapp
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.zaich.githubuserapp.databinding.ItemLayoutBinding
 
-class UserAdapter internal constructor(private val context: Context): BaseAdapter(){
+class UserAdapter(private val list: ArrayList<UserModel>,val context: Context):RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+
+
+    inner class ViewHolder(private val binding: ItemLayoutBinding):RecyclerView.ViewHolder(binding.root) {
+        fun bind(user:UserModel) {
+            binding.tvName.text = user.name
+            binding.tvUserName.text = user.user_name
+            binding.imgPhoto.setImageResource(user.avatar)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ViewHolder(binding)
+
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(list[position])
+
+        holder.itemView.setOnClickListener{
+            val model = list.get(position)
+
+            val intent = Intent(context,DetailUserActivity::class.java)
+            intent.putExtra(DetailUserActivity.EXTRA_USER,model)
+
+            context.startActivity(intent)
+        }
+    }
+
+    override fun getItemCount(): Int = list.size
+
+}
+
+/*class UserAdapter internal constructor(private val context: Context): BaseAdapter(){
 
     internal var user = arrayListOf<UserModel>()
 
@@ -49,4 +82,4 @@ class UserAdapter internal constructor(private val context: Context): BaseAdapte
             binding.imgPhoto.setImageResource(user.avatar)
         }
     }
-}
+}*/
