@@ -84,7 +84,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Repository"
+                    android:text="@string/repository"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/grey"/>
@@ -128,7 +128,7 @@
                 android:text="@string/location"
                 android:textStyle="italic"
                 android:textSize="16sp"
-                android:paddingStart="15dp"/>
+                android:layout_marginStart ="15dp"/>
 
         </LinearLayout>
 
@@ -150,7 +150,7 @@
                 android:text="@string/company"
                 android:textStyle="italic"
                 android:textSize="16sp"
-                android:paddingStart="15dp"/>
+                android:layout_marginStart="15dp"/>
 
         </LinearLayout>
 
