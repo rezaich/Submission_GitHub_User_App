@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_blue_grey"
-    tools:context=".DetailUserActivity">
+    tools:context=".layout.DetailUserActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -154,9 +154,12 @@
 
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/pbSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
     </LinearLayout>
-
-
 
 </ScrollView>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zaich.githubuserapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_github"
@@ -9,7 +11,7 @@
         android:roundIcon="@mipmap/ic_github_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GitHubUserApp">
-        <activity android:name=".SplashScreenActivity"
+        <activity android:name=".layout.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailUserActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".layout.DetailUserActivity" />
+        <activity android:name=".layout.MainActivity"/>
     </application>
 
 </manifest>
