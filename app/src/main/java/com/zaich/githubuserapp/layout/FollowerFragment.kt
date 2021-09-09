@@ -46,8 +46,6 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val index = arguments?.getInt(ARG_SECTION_NUMBER,0)
-
 
         val args = arguments
         username = args?.getString(DetailUserActivity.EXTRA_USER).toString()

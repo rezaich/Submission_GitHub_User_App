@@ -59,7 +59,7 @@ class DetailUserActivity : AppCompatActivity() {
             viewPager.adapter = sectionsPagerAdapter
             tabLayout.setupWithViewPager(viewPager)
         }*/
-        viewPagerAdapter = SectionsPagerAdapter(supportFragmentManager,lifecycle)
+        viewPagerAdapter = SectionsPagerAdapter(supportFragmentManager,lifecycle,bundle)
 
         with(binding){
             viewPager.adapter = viewPagerAdapter
