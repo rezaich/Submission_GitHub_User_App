@@ -15,7 +15,7 @@ import com.zaich.githubuserapp.viewmodel.FollowerViewModel
 import com.zaich.githubuserapp.viewmodel.FollowingViewModel
 
 
-class FollowingFragment : Fragment() {
+class FollowingFragment : Fragment(R.layout.fragment_follow) {
     private var list = arrayListOf<UserModel>()
     private lateinit var viewModel : FollowingViewModel
     private lateinit var adapter: UserAdapter

@@ -32,4 +32,23 @@ class FollowerViewModel: ViewModel() {
 
     fun getFollower():MutableLiveData<ArrayList<UserModel>> = followers
 
+    private val followings  = MutableLiveData<ArrayList<UserModel>>()
+
+    fun setFollowings(username  : String){
+        serverInterface?.getUserFollowingEndpoint(username)?.enqueue(object : Callback<ArrayList<UserModel>>{
+            override fun onResponse(
+                call: Call<ArrayList<UserModel>>,
+                response: Response<ArrayList<UserModel>>
+            ) {
+                if (response.isSuccessful)followings.postValue(response.body())
+            }
+
+            override fun onFailure(call: Call<ArrayList<UserModel>>, t: Throwable) {
+                Log.d("onFailure",t.message.toString())
+            }
+        })
+    }
+
+    fun getFollowing() : MutableLiveData<ArrayList<UserModel>> = followings
+
 }

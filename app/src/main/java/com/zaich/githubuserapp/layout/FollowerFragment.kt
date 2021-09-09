@@ -59,13 +59,14 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
             rvFollower.layoutManager = LinearLayoutManager(activity)
             rvFollower.adapter = adapter
         }
-        viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(FollowerViewModel::class.java)
-        viewModel.setFollowers(username)
-        viewModel.getFollower().observe(viewLifecycleOwner,{
-            if (it !=null){
-                adapter.setSearchuser(it)
-            }
-        })
-    }
 
+
+        viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(FollowerViewModel::class.java)
+            viewModel.setFollowers(username)
+            viewModel.getFollower().observe(viewLifecycleOwner,{
+                if (it != null){
+                    adapter.setSearchuser(it)
+                }
+            })
+    }
 }

@@ -34,3 +34,33 @@ class SectionsPagerAdapter(fragment: FragmentManager,lifecycle: Lifecycle,data:B
     }
 
 }
+/*class SectionsPagerAdapter(private val context: Context, supportFragmentManager: FragmentManager,data:Bundle):FragmentPagerAdapter(supportFragmentManager,
+    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
+
+    private var fragmentBundle : Bundle
+
+    init {
+        fragmentBundle = data
+    }
+
+    @StringRes
+    private val TAB_TITLE = intArrayOf(R.string.tab_1,R.string.tab_2)
+
+    override fun getCount(): Int {
+        return 2
+    }
+
+    override fun getItem(position: Int): Fragment {
+        var fragment:Fragment? = null
+        when(position){
+            0 -> fragment = FollowerFragment()
+            1->fragment = FollowingFragment()
+        }
+        fragment?.arguments = this.fragmentBundle
+        return fragment as Fragment
+    }
+
+    override fun getPageTitle(position: Int): CharSequence {
+        return context.resources.getString(TAB_TITLE[position])
+    }
+}*/
