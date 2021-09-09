@@ -33,17 +33,18 @@ class DetailUserActivity : AppCompatActivity() {
             if (it != null){
                 with(binding){
                     Glide.with(this@DetailUserActivity).load(it.avatar).into(imgPhoto)
-                    tvCompany.text = it.company
                     tvNameDetail.text = it.name
-                    tvLocation.text = it.location
                     tvRepository.text = it.public_repos.toString()
-                    tvLocation.text = it.location
-                    tvFollower.text = it.followers.toString()
-                    tvFollowing.text= it.following.toString()
                     showLoading(false)
                 }
             }
         })
+
+        val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager)
+        with(binding){
+            viewPager.adapter = sectionsPagerAdapter
+            tabs.setupWithViewPager(viewPager)
+        }
     }
 
     private fun showLoading(state:Boolean){
