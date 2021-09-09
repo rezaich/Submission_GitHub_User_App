@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.databinding.FragmentFollowBinding
 
-private var _binding : FragmentFollowBinding? = null
-private val binding get() =  _binding
-class FollowingFragment : Fragment() {
 
+class FollowingFragment : Fragment() {
+    private var _binding : FragmentFollowBinding? = null
+    private val binding get() =  _binding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -3,8 +3,13 @@ package com.zaich.githubuserapp.layout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.databinding.ActivityDetailUserBinding
 import com.zaich.githubuserapp.viewmodel.DetailUserViewModel
 
@@ -12,8 +17,14 @@ class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDetailUserBinding
     private lateinit var viewModel: DetailUserViewModel
+    private lateinit var viewPagerAdapter: SectionsPagerAdapter
     companion object{
         const val EXTRA_USER = "EXTRA USER"
+
+        @StringRes
+        private val TAB_TITLE = intArrayOf(
+            R.string.tab_1 ,R.string.tab_2
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +36,9 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val username = intent.getStringExtra(EXTRA_USER)
+        val bundle= Bundle()
+        bundle.putString(EXTRA_USER,username)
+
         supportActionBar?.title = username
 
         viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
@@ -40,10 +54,18 @@ class DetailUserActivity : AppCompatActivity() {
             }
         })
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager)
+/*        val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager,bundle)
         with(binding){
             viewPager.adapter = sectionsPagerAdapter
-            tabs.setupWithViewPager(viewPager)
+            tabLayout.setupWithViewPager(viewPager)
+        }*/
+        viewPagerAdapter = SectionsPagerAdapter(supportFragmentManager,lifecycle)
+
+        with(binding){
+            viewPager.adapter = viewPagerAdapter
+            TabLayoutMediator(tabLayout,viewPager){tab,position ->
+                tab.text = resources.getString(TAB_TITLE[position])
+            }.attach()
         }
     }
 

@@ -46,12 +46,7 @@ class MainActivity : AppCompatActivity() {
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String): Boolean {
                     binding.searchView.clearFocus()
-                    if (!TextUtils.isEmpty(query)){
-                        searchData(query)
-                    }else{
-                        //data
-                    }
-
+                    searchData(query)
                     return true
                 }
 

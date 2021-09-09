@@ -1,26 +1,73 @@
 package com.zaich.githubuserapp.layout
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
+import com.zaich.githubuserapp.viewmodel.FollowerViewModel
 import com.zaich.githubuserapp.databinding.FragmentFollowBinding
+import com.zaich.githubuserapp.model.UserModel
 
-class FollowerFragment : Fragment() {
+class FollowerFragment : Fragment(R.layout.fragment_follow) {
 
-    private var _binding : FragmentFollowBinding? = null
+    private var list = arrayListOf<UserModel>()
+    private lateinit var viewModel : FollowerViewModel
+    private lateinit var adapter: UserAdapter
+    private lateinit var username: String
+    private lateinit var _binding : FragmentFollowBinding
     private val binding get() =  _binding
 
-    override fun onCreateView(
+/*    companion object{
+
+        private const val ARG_SECTION_NUMBER = "section_number"
+
+        @JvmStatic
+        fun newInstance(index: Int) =
+            FollowerFragment().apply {
+                arguments =Bundle().apply {
+                    putInt(ARG_SECTION_NUMBER,index)
+                }
+            }
+    }*/
+
+/*    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentFollowBinding.inflate(layoutInflater)
         return binding?.root
-    }
+    }*/
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        val index = arguments?.getInt(ARG_SECTION_NUMBER,0)
+
+
+        val args = arguments
+        username = args?.getString(DetailUserActivity.EXTRA_USER).toString()
+        _binding = FragmentFollowBinding.bind(view)
+
+        adapter = activity?.let { UserAdapter(list, it) }!!
+        adapter.notifyDataSetChanged()
+
+        binding.apply {
+            rvFollower.setHasFixedSize(true)
+            rvFollower.layoutManager = LinearLayoutManager(activity)
+            rvFollower.adapter = adapter
+        }
+        viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(FollowerViewModel::class.java)
+        viewModel.setFollowers(username)
+        viewModel.getFollower().observe(viewLifecycleOwner,{
+            if (it !=null){
+                adapter.setSearchuser(it)
+            }
+        })
+    }
 
 }

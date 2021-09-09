@@ -9,19 +9,19 @@ import com.zaich.githubuserapp.model.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.create
 
-class FollowerViewModel: ViewModel() {
-    private val serverInterface : ServerInterface? = ServerClient().getApiClient()?.create(
-        ServerInterface::class.java)
-    private val followers = MutableLiveData<ArrayList<UserModel>>()
+class FollowingViewModel:ViewModel() {
+    private val serverInterface : ServerInterface? = ServerClient().getApiClient()?.create()
+    private val followings  = MutableLiveData<ArrayList<UserModel>>()
 
-    fun setFollowers(username: String){
-        serverInterface?.getUserFollowersEndpoint(username)?.enqueue(object : Callback<ArrayList<UserModel>>{
+    fun setFollowings(username  : String){
+        serverInterface?.getUserFollowingEndpoint(username)?.enqueue(object : Callback<ArrayList<UserModel>>{
             override fun onResponse(
                 call: Call<ArrayList<UserModel>>,
                 response: Response<ArrayList<UserModel>>
             ) {
-                if (response.isSuccessful) followers.postValue(response.body())
+                if (response.isSuccessful)followings.postValue(response.body())
             }
 
             override fun onFailure(call: Call<ArrayList<UserModel>>, t: Throwable) {
@@ -30,6 +30,6 @@ class FollowerViewModel: ViewModel() {
         })
     }
 
-    fun getFollower():MutableLiveData<ArrayList<UserModel>> = followers
+    fun getFollowing() : MutableLiveData<ArrayList<UserModel>> = followings
 
 }
