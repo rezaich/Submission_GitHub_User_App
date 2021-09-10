@@ -10,12 +10,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel:ViewModel() {
-    private val serverInterface : ServerInterface = ServerClient().getApiClient()!!.create(ServerInterface::class.java)
+class DetailUserViewModel : ViewModel() {
+    private val serverInterface: ServerInterface =
+        ServerClient().getApiClient()!!.create(ServerInterface::class.java)
     private val detailUser = MutableLiveData<UserDetailModel>()
 
-    fun setDetailUser(username : String){
-        serverInterface.getDetailUser(username).enqueue(object : Callback<UserDetailModel>{
+    fun setDetailUser(username: String) {
+        serverInterface.getDetailUser(username).enqueue(object : Callback<UserDetailModel> {
             override fun onResponse(
                 call: Call<UserDetailModel>,
                 response: Response<UserDetailModel>
@@ -24,10 +25,10 @@ class DetailUserViewModel:ViewModel() {
             }
 
             override fun onFailure(call: Call<UserDetailModel>, t: Throwable) {
-                Log.d("Failure",t.message.toString())
+                Log.d("Failure", t.message.toString())
             }
         })
     }
 
-    fun getDetailUser():MutableLiveData<UserDetailModel> = detailUser
+    fun getDetailUser(): MutableLiveData<UserDetailModel> = detailUser
 }

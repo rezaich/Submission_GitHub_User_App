@@ -15,15 +15,16 @@ import com.zaich.githubuserapp.viewmodel.DetailUserViewModel
 
 class DetailUserActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityDetailUserBinding
+    private lateinit var binding: ActivityDetailUserBinding
     private lateinit var viewModel: DetailUserViewModel
     private lateinit var viewPagerAdapter: SectionsPagerAdapter
-    companion object{
+
+    companion object {
         const val EXTRA_USER = "EXTRA USER"
 
         @StringRes
         private val TAB_TITLE = intArrayOf(
-            R.string.tab_1 ,R.string.tab_2
+            R.string.tab_1, R.string.tab_2
         )
     }
 
@@ -36,16 +37,19 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val username = intent.getStringExtra(EXTRA_USER)
-        val bundle= Bundle()
-        bundle.putString(EXTRA_USER,username)
+        val bundle = Bundle()
+        bundle.putString(EXTRA_USER, username)
 
         supportActionBar?.title = username
 
-        viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(DetailUserViewModel::class.java)
         viewModel.setDetailUser(username!!)
-        viewModel.getDetailUser().observe(this,{
-            if (it != null){
-                with(binding){
+        viewModel.getDetailUser().observe(this, {
+            if (it != null) {
+                with(binding) {
                     Glide.with(this@DetailUserActivity).load(it.avatar).into(imgPhoto)
                     tvNameDetail.text = it.name
                     tvRepository.text = it.public_repos.toString()
@@ -54,26 +58,21 @@ class DetailUserActivity : AppCompatActivity() {
             }
         })
 
-/*        val sectionsPagerAdapter = SectionsPagerAdapter(this,supportFragmentManager,bundle)
-        with(binding){
-            viewPager.adapter = sectionsPagerAdapter
-            tabLayout.setupWithViewPager(viewPager)
-        }*/
-        viewPagerAdapter = SectionsPagerAdapter(supportFragmentManager,lifecycle,bundle)
+        viewPagerAdapter = SectionsPagerAdapter(supportFragmentManager, lifecycle, bundle)
 
-        with(binding){
+        with(binding) {
             viewPager.adapter = viewPagerAdapter
-            TabLayoutMediator(tabLayout,viewPager){tab,position ->
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = resources.getString(TAB_TITLE[position])
             }.attach()
         }
     }
 
-    private fun showLoading(state:Boolean){
-        if (state){
-            binding.pbSearch.visibility= View.VISIBLE
-        }else{
-            binding.pbSearch.visibility= View.GONE
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.pbSearch.visibility = View.VISIBLE
+        } else {
+            binding.pbSearch.visibility = View.GONE
         }
     }
 

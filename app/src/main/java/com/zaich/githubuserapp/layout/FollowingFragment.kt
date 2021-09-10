@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.databinding.FragmentFollowBinding
 import com.zaich.githubuserapp.model.UserModel
-import com.zaich.githubuserapp.viewmodel.FollowerViewModel
 import com.zaich.githubuserapp.viewmodel.FollowingViewModel
 
 
 class FollowingFragment : Fragment(R.layout.fragment_follow) {
     private var list = arrayListOf<UserModel>()
-    private lateinit var viewModel : FollowingViewModel
+    private lateinit var viewModel: FollowingViewModel
     private lateinit var adapter: UserAdapter
     private lateinit var username: String
-    private lateinit var _binding : FragmentFollowBinding
-    private val binding get() =  _binding
+    private lateinit var _binding: FragmentFollowBinding
+    private val binding get() = _binding
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,10 +40,11 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
             rvFollower.adapter = adapter
         }
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            FollowingViewModel::class.java)
+            FollowingViewModel::class.java
+        )
         viewModel.setFollowings(username)
-        viewModel.getFollowing().observe(viewLifecycleOwner,{
-            if (it !=null){
+        viewModel.getFollowing().observe(viewLifecycleOwner, {
+            if (it != null) {
                 adapter.setSearchuser(it)
             }
         })

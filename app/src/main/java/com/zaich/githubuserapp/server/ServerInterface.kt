@@ -14,11 +14,11 @@ interface ServerInterface {
 
     @GET("search/users")
     @Headers("Authorization: $GITHUB_TOKEN ")
-    fun getSearchEndPoint(@Query("q")searchQuery: String):Call<UserArrayModel>
+    fun getSearchEndPoint(@Query("q") searchQuery: String): Call<UserArrayModel>
 
     @GET("users/{username}")
     @Headers("Authorization: $GITHUB_TOKEN")
-    fun getDetailUser(@Path("username") username:String):Call<UserDetailModel>
+    fun getDetailUser(@Path("username") username: String): Call<UserDetailModel>
 
     @GET("users/{username}/followers")
     @Headers("Authorization: token $GITHUB_TOKEN")

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserAdapter
+    private lateinit var layout_empty :ConstraintLayout
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +31,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setIcon(R.mipmap.ic_github_foreground)
+
+        layout_empty = findViewById(R.id.layoutEmpty)
 
         adapter = UserAdapter(list ,this)
         adapter.notifyDataSetChanged()
@@ -45,8 +48,11 @@ class MainActivity : AppCompatActivity() {
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    binding.searchView.clearFocus()
+                    if (query.isEmpty()){
+                    layout_empty.visibility =View.VISIBLE
+                    }
                     searchData(query)
+                    layout_empty.visibility = View.GONE
                     return true
                 }
 

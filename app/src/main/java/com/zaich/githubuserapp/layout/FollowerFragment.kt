@@ -14,33 +14,12 @@ import com.zaich.githubuserapp.model.UserModel
 class FollowerFragment : Fragment(R.layout.fragment_follow) {
 
     private var list = arrayListOf<UserModel>()
-    private lateinit var viewModel : FollowerViewModel
+    private lateinit var viewModel: FollowerViewModel
     private lateinit var adapter: UserAdapter
     private lateinit var username: String
-    private lateinit var _binding : FragmentFollowBinding
-    private val binding get() =  _binding
+    private lateinit var _binding: FragmentFollowBinding
+    private val binding get() = _binding
 
-/*    companion object{
-
-        private const val ARG_SECTION_NUMBER = "section_number"
-
-        @JvmStatic
-        fun newInstance(index: Int) =
-            FollowerFragment().apply {
-                arguments =Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER,index)
-                }
-            }
-    }*/
-
-/*    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentFollowBinding.inflate(layoutInflater)
-        return binding?.root
-    }*/
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,12 +40,15 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
         }
 
 
-        viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(FollowerViewModel::class.java)
-            viewModel.setFollowers(username)
-            viewModel.getFollower().observe(viewLifecycleOwner,{
-                if (it != null){
-                    adapter.setSearchuser(it)
-                }
-            })
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(FollowerViewModel::class.java)
+        viewModel.setFollowers(username)
+        viewModel.getFollower().observe(viewLifecycleOwner, {
+            if (it != null) {
+                adapter.setSearchuser(it)
+            }
+        })
     }
 }

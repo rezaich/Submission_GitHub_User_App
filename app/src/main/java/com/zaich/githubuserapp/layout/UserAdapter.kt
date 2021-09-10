@@ -10,10 +10,12 @@ import com.bumptech.glide.Glide
 import com.zaich.githubuserapp.databinding.ItemLayoutBinding
 import com.zaich.githubuserapp.model.UserModel
 
-class UserAdapter(private val list: ArrayList<UserModel>, val context: Context):RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private val list: ArrayList<UserModel>, val context: Context) :
+    RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
 
-    inner class ViewHolder(private val binding: ItemLayoutBinding):RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(user: UserModel) {
             binding.tvName.text = user.username
             binding.tvUserName.text = user.html_url
@@ -22,7 +24,7 @@ class UserAdapter(private val list: ArrayList<UserModel>, val context: Context):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
 
     }
@@ -34,7 +36,7 @@ class UserAdapter(private val list: ArrayList<UserModel>, val context: Context):
             val username = list[position]
 
             val intent = Intent(context, DetailUserActivity::class.java)
-            intent.putExtra(DetailUserActivity.EXTRA_USER,username.username )
+            intent.putExtra(DetailUserActivity.EXTRA_USER, username.username)
 
             context.startActivities(arrayOf(intent))
         }
@@ -43,8 +45,8 @@ class UserAdapter(private val list: ArrayList<UserModel>, val context: Context):
     override fun getItemCount(): Int = list.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setSearchuser(users: ArrayList<UserModel>){
-        with(list){
+    fun setSearchuser(users: ArrayList<UserModel>) {
+        with(list) {
             clear()
             addAll(users)
         }
