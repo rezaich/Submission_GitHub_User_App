@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub User App</string>
+    <string name="name">nama</string>
+    <string name="user_name">Nama user</string>
+    <string name="follower">Pengikut</string>
+    <string name="following">Mengikuti</string>
+    <string name="total">jumlah</string>
+    <string name="location">Location</string>
+    <string name="company">Company</string>
+    <string name="splashscreen_logo">SplashScreen logo</string>
+    <string name="repository">Penyimpanan</string>
+    <string name="search">Pencarian</string>
+    <string name="no_data">Tidak Ada Data</string>
+    <string name="tab_1">Pengikut</string>
+    <string name="tab_2">Mengikuti</string>
+    <string name="change_language">Ganti Bahasa</string>
+</resources>

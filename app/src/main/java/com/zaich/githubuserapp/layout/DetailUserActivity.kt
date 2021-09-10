@@ -53,6 +53,8 @@ class DetailUserActivity : AppCompatActivity() {
                     Glide.with(this@DetailUserActivity).load(it.avatar).into(imgPhoto)
                     tvNameDetail.text = it.name
                     tvRepository.text = it.public_repos.toString()
+                    tvFollowing.text = it.following.toString()
+                    tvFollower.text = it.followers.toString()
                     showLoading(false)
                 }
             }
