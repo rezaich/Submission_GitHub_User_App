@@ -143,51 +143,51 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="5dp"
-            android:id="@+id/llLocation"
+            android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_loc"/>
+                android:src="@drawable/ic_loc" />
 
             <TextView
                 android:id="@+id/tvLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:text="@string/location"
-                android:textStyle="italic"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:layout_marginStart ="15dp"/>
+                android:textStyle="italic" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/llCompany"
             android:padding="5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_company"/>
+                android:src="@drawable/ic_company" />
 
             <TextView
                 android:id="@+id/tvCompany"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:text="@string/company"
-                android:textStyle="italic"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:layout_marginStart="15dp"/>
+                android:textStyle="italic" />
 
         </LinearLayout>
 
