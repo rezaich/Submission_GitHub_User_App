@@ -1,6 +1,7 @@
 package com.zaich.githubuserapp.layout
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,9 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -48,18 +51,28 @@ class MainActivity : AppCompatActivity() {
             rvList.adapter = adapter
             rvList.setHasFixedSize(true)
 
+
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     if (query.isEmpty()) {
                         layoutOk.layoutEmpty.visibility = View.VISIBLE
+                        rvList.visibility = View.GONE
                     } else {
                         searchData(query)
                         layoutOk.layoutEmpty.visibility = View.GONE
+                        rvList.visibility = View.VISIBLE
                     }
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
+                    if (newText.isEmpty()) {
+                        layoutOk.layoutEmpty.visibility = View.VISIBLE
+                        rvList.visibility = View.GONE
+                    } else {
+                        layoutOk.layoutEmpty.visibility = View.GONE
+                        rvList.visibility = View.VISIBLE
+                    }
                     return false
                 }
             })
@@ -70,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.setSearchuser(it)
                 showLoading(false)
             } else {
-                Toast.makeText(this, "Pengguna tidak ada", Toast.LENGTH_SHORT).show()
+                binding.layoutOk.layoutEmpty.visibility = View.VISIBLE
             }
         })
     }
@@ -102,5 +115,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(mIntent)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (currentFocus != null && imm.isAcceptingText) {
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }

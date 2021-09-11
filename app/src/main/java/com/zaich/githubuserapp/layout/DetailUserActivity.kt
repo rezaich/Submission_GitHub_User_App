@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.databinding.ActivityDetailUserBinding
@@ -47,6 +45,7 @@ class DetailUserActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory()
         ).get(DetailUserViewModel::class.java)
         viewModel.setDetailUser(username!!)
+        showLoading(true)
         viewModel.getDetailUser().observe(this, {
             if (it != null) {
                 with(binding) {

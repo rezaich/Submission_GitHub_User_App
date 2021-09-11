@@ -2,9 +2,7 @@ package com.zaich.githubuserapp.layout
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +37,8 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
             rvFollower.layoutManager = LinearLayoutManager(activity)
             rvFollower.adapter = adapter
         }
+        showLoading(true)
+
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             FollowingViewModel::class.java
         )
@@ -46,8 +46,16 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
         viewModel.getFollowing().observe(viewLifecycleOwner, {
             if (it != null) {
                 adapter.setSearchuser(it)
+                showLoading(false)
             }
         })
     }
 
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.pbSearch.visibility = View.VISIBLE
+        } else {
+            binding.pbSearch.visibility = View.GONE
+        }
+    }
 }

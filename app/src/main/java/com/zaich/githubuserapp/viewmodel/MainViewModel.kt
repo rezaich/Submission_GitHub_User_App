@@ -23,16 +23,11 @@ class MainViewModel : ViewModel() {
                 call: Call<UserArrayModel>,
                 response: Response<UserArrayModel>
             ) {
-                Log.i("mainActivity", "onResponse: ${response.code()} ${response.body()}")
                 if (response.isSuccessful) search.postValue(response.body()?.items)
-                else {
-
-                }
             }
 
             override fun onFailure(call: Call<UserArrayModel>, t: Throwable) {
                 Log.d("Failure", t.message.toString())
-                Log.i("mainActivity", "onResponse: $t")
             }
         })
     }

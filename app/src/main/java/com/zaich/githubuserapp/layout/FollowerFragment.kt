@@ -39,6 +39,7 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
             rvFollower.adapter = adapter
         }
 
+        showLoading(true)
 
         viewModel = ViewModelProvider(
             this,
@@ -48,7 +49,16 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
         viewModel.getFollower().observe(viewLifecycleOwner, {
             if (it != null) {
                 adapter.setSearchuser(it)
+                showLoading(false)
             }
         })
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.pbSearch.visibility = View.VISIBLE
+        } else {
+            binding.pbSearch.visibility = View.GONE
+        }
     }
 }

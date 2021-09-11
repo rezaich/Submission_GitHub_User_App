@@ -21,7 +21,7 @@ class DetailUserViewModel : ViewModel() {
                 call: Call<UserDetailModel>,
                 response: Response<UserDetailModel>
             ) {
-                detailUser.postValue(response.body())
+                if (response.isSuccessful)detailUser.postValue(response.body())
             }
 
             override fun onFailure(call: Call<UserDetailModel>, t: Throwable) {
