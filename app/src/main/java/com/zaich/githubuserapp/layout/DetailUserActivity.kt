@@ -54,7 +54,16 @@ class DetailUserActivity : AppCompatActivity() {
                     tvRepository.text = it.public_repos.toString()
                     tvFollowing.text = it.following.toString()
                     tvFollower.text = it.followers.toString()
+                    tvCompany.text = it.company.toString()
+                    tvLocation.text = it.location.toString()
                     showLoading(false)
+
+                    if (it.location.isNullOrEmpty()) {
+                        llLocation.visibility = View.GONE
+                    }
+                    if (it.company.isNullOrEmpty()) {
+                        llCompany.visibility = View.GONE
+                    }
                 }
             }
         })
