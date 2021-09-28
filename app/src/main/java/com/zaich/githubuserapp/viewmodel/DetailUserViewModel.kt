@@ -7,6 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zaich.githubuserapp.database.Favorite
+import com.zaich.githubuserapp.database.FavoriteDao
+import com.zaich.githubuserapp.database.FavoriteRoomDatabase
 //import com.zaich.githubuserapp.database.Favorite
 //import com.zaich.githubuserapp.database.FavoriteDao
 //import com.zaich.githubuserapp.database.FavoriteRoomDatabase
@@ -23,11 +26,11 @@ import retrofit2.Response
 class DetailUserViewModel (application: Application) : AndroidViewModel(application) {
     private val serverInterface: ServerInterface =
         ServerClient().getApiClient()!!.create(ServerInterface::class.java)
-//    private var favoriteRoomDatabase : FavoriteRoomDatabase? = FavoriteRoomDatabase.getFavoriteUsersDB(application)
-//    private var favoriteDao : FavoriteDao?
-//    init {
-//        favoriteDao = favoriteRoomDatabase?.favoriteDao()
-//    }
+    private var favoriteRoomDatabase : FavoriteRoomDatabase? = FavoriteRoomDatabase.getFavoriteUsersDB(application)
+    private var favoriteDao : FavoriteDao?
+    init {
+        favoriteDao = favoriteRoomDatabase?.favoriteDao()
+    }
 
     private val detailUser = MutableLiveData<UserDetailModel>()
 
@@ -48,20 +51,20 @@ class DetailUserViewModel (application: Application) : AndroidViewModel(applicat
 
     fun getDetailUser(): MutableLiveData<UserDetailModel> = detailUser
 
-//    suspend fun checkFavoriteUsers(id: Int) = favoriteDao?.checkFavoriteUsers(id)
-//
-//    fun addFavoriteUsers(username: String, id: Int, avatar: String) {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val githubFavoriteUsers = Favorite(username, id, avatar)
-//            favoriteDao?.addfavorite(githubFavoriteUsers)
-//            Log.d("Failure ", githubFavoriteUsers.toString())
-//        }
-//    }
-//
-//    fun removeFavoriteUsers(id: Int) {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            favoriteDao?.removeFavoriteUsers(id)
-//            Log.d("Failure ", id.toString())
-//        }
-//    }
+    suspend fun checkFavoriteUsers(id: Int) = favoriteDao?.checkFavoriteUsers(id)
+
+    fun addFavoriteUsers(username: String, id: Int,url: String, avatar: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val githubFavoriteUsers = Favorite(username, id, url, avatar)
+            favoriteDao?.addfavorite(githubFavoriteUsers)
+            Log.d("Failure ", githubFavoriteUsers.toString())
+        }
+    }
+
+    fun removeFavoriteUsers(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            favoriteDao?.removeFavoriteUsers(id)
+            Log.d("Failure ", id.toString())
+        }
+    }
 }

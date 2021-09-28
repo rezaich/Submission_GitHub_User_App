@@ -1,12 +1,14 @@
 package com.zaich.githubuserapp.layout
 
 import android.content.Intent
+import android.content.Intent.EXTRA_USER
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -26,7 +28,6 @@ class DetailUserActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailUserViewModel
     private lateinit var viewPagerAdapter: SectionsPagerAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
@@ -34,10 +35,11 @@ class DetailUserActivity : AppCompatActivity() {
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-//        val username = intent.getStringExtra(EXTRA_USER)
         val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
+//        val username = intent.getStringExtra(EXTRA_USER)
+
         val username = selectUser.username
+
         val bundle = Bundle()
         bundle.putString(EXTRA_USER, username)
 
@@ -78,26 +80,6 @@ class DetailUserActivity : AppCompatActivity() {
             }.attach()
         }
 
-//        var checkFavoriteUser = false
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val countFavoriteUser = viewModel.checkFavoriteUsers(id)
-//            withContext(Dispatchers.Main) {
-//                if (countFavoriteUser != null) {
-//                    btnFavorite.apply {
-//                        if (countFavoriteUser > 0) {
-//                            isChecked = true
-//                            checkFavoriteUser = true
-//                        } else {
-//                            isChecked = false
-//                            checkFavoriteUser = false
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        var checkFavoriteUser = false
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -106,9 +88,42 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_favorite_users) {
-
+        var check = false
+        val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
+        val id = selectUser.id
+        CoroutineScope(Dispatchers.IO).launch {
+            val countFavoriteUser = viewModel.checkFavoriteUsers(id)
+            withContext(Dispatchers.Main) {
+                if (countFavoriteUser != null) {
+                    if (countFavoriteUser > 0) {
+                        item.isChecked = true
+                        check = true
+                    } else {
+                        item.isChecked = false
+                        check = false
+                        check = false
+                    }
+                }
+            }
         }
+/*        if (item.itemId == R.id.action_unfavorite_users) {
+            if (!check){
+                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
+                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
+            }else{
+                item.setVisible(false)
+            }
+        }
+        if (item.itemId == R.id.action_favorite_users){
+            if (check){
+                viewModel.removeFavoriteUsers(id)
+                Toast.makeText(this, "Unfavorite", Toast.LENGTH_SHORT).show()
+                item.isChecked = check
+            }else {
+                item.setVisible(false)
+            }*/
+
+//        }
         return super.onOptionsItemSelected(item)
     }
 
