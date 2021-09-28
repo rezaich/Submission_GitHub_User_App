@@ -4,7 +4,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ServerClient {
-    var BASE_URL: String = "https://api.github.com/"
     var retrofit: Retrofit? = null
 
     fun getApiClient(): Retrofit? {
@@ -14,5 +13,9 @@ class ServerClient {
                 .addConverterFactory(GsonConverterFactory.create()).build()
         }
         return retrofit
+    }
+
+    companion object {
+        private const val BASE_URL: String = "https://api.github.com/"
     }
 }

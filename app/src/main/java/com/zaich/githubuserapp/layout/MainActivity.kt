@@ -78,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             })
         }
         viewModel.getSearch().observe(this, {
-            Log.i("mainActivity", "onCreate: $it")
             if (it != null) {
                 adapter.setSearchuser(it)
                 showLoading(false)

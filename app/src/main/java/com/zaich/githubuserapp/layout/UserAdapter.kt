@@ -33,11 +33,12 @@ class UserAdapter(private val list: ArrayList<UserModel>, val context: Context) 
         holder.bind(list[position])
 
         holder.itemView.setOnClickListener {
-            val username = list[position]
+//            val model = list.get(position)
+            val user = list[position]
 
             val intent = Intent(context, DetailUserActivity::class.java)
-            intent.putExtra(DetailUserActivity.EXTRA_USER, username.username)
-
+            intent.putExtra(DetailUserActivity.EXTRA_USER, user)
+//            intent.putExtra(DetailUserActivity.EXTRA_USER,user.username)
             context.startActivities(arrayOf(intent))
         }
     }

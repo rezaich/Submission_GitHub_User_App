@@ -17,7 +17,7 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
     private lateinit var viewModel: FollowerViewModel
     private lateinit var adapter: UserAdapter
     private lateinit var username: String
-    private lateinit var _binding: FragmentFollowBinding
+    private var _binding: FragmentFollowBinding? =null
     private val binding get() = _binding
 
 
@@ -30,10 +30,10 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
         username = args?.getString(DetailUserActivity.EXTRA_USER).toString()
         _binding = FragmentFollowBinding.bind(view)
 
-        adapter = activity?.let { UserAdapter(list, it) }!!
+        adapter = UserAdapter(list, requireActivity())
         adapter.notifyDataSetChanged()
 
-        binding.apply {
+        binding?.apply {
             rvFollower.setHasFixedSize(true)
             rvFollower.layoutManager = LinearLayoutManager(activity)
             rvFollower.adapter = adapter
@@ -55,10 +55,12 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
     }
 
     private fun showLoading(state: Boolean) {
-        if (state) {
-            binding.pbSearch.visibility = View.VISIBLE
-        } else {
-            binding.pbSearch.visibility = View.GONE
+        binding?.apply {
+            if (state) {
+               pbSearch.visibility = View.VISIBLE
+            } else {
+                pbSearch.visibility = View.GONE
+            }
         }
     }
 }
