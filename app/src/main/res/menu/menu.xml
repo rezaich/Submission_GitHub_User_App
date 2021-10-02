@@ -10,12 +10,5 @@
         android:id="@+id/action_favorite_users"
         android:icon="@drawable/ic_love"
         app:showAsAction="ifRoom"
-        android:visible="true"
-        android:title="FAVORITE"/>
-    <item
-        android:id="@+id/action_unfavorite_users"
-        android:icon="@drawable/ic_unlove"
-        app:showAsAction="ifRoom"
-        android:visible="true"
-        android:title="UNFAVORITE"/>
+        android:title="@string/favorite"/>
 </menu>

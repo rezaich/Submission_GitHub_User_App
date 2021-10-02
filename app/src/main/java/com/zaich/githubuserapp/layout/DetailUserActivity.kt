@@ -5,6 +5,7 @@ import android.content.Intent.EXTRA_USER
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -39,6 +40,7 @@ class DetailUserActivity : AppCompatActivity() {
 //        val username = intent.getStringExtra(EXTRA_USER)
 
         val username = selectUser.username
+        val id = selectUser.id
 
         val bundle = Bundle()
         bundle.putString(EXTRA_USER, username)
@@ -80,52 +82,88 @@ class DetailUserActivity : AppCompatActivity() {
             }.attach()
         }
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var check = false
-        val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
-        val id = selectUser.id
+        var checkFavoriteUser = false
         CoroutineScope(Dispatchers.IO).launch {
             val countFavoriteUser = viewModel.checkFavoriteUsers(id)
             withContext(Dispatchers.Main) {
                 if (countFavoriteUser != null) {
-                    if (countFavoriteUser > 0) {
-                        item.isChecked = true
-                        check = true
-                    } else {
-                        item.isChecked = false
-                        check = false
-                        check = false
+                    binding.btnFavorite.apply {
+                        if (countFavoriteUser > 0) {
+                            checkFavoriteUser = true
+                        } else {
+                            checkFavoriteUser = false
+                            checkFavoriteUser = false
+                        }
                     }
                 }
             }
         }
-/*        if (item.itemId == R.id.action_unfavorite_users) {
-            if (!check){
-                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
-                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
-            }else{
-                item.setVisible(false)
+
+        binding.btnFavorite.setOnClickListener {
+            checkFavoriteUser = !checkFavoriteUser
+//            val add = resources.getString(R.string.add_favorite)
+//            val remove = resources.getString(R.string.remove_favorite)
+            with(viewModel) {
+                binding.btnFavorite.apply {
+                    Log.d("btnFavorite", id.toString())
+                    if (checkFavoriteUser) {
+                        addFavoriteUsers(username,id,selectUser.html_url,selectUser.avatar)
+                        Toast.makeText(this@DetailUserActivity, "FAVORITE", Toast.LENGTH_SHORT).show()
+                    } else {
+                        removeFavoriteUsers(id)
+                        Toast.makeText(this@DetailUserActivity, "UNFAVORITE", Toast.LENGTH_SHORT).show()
+                        isClickable = checkFavoriteUser
+                    }
+                }
             }
         }
-        if (item.itemId == R.id.action_favorite_users){
-            if (check){
-                viewModel.removeFavoriteUsers(id)
-                Toast.makeText(this, "Unfavorite", Toast.LENGTH_SHORT).show()
-                item.isChecked = check
-            }else {
-                item.setVisible(false)
-            }*/
 
-//        }
-        return super.onOptionsItemSelected(item)
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.menu, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        var check = false
+//        val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
+//        val id = selectUser.id
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val countFavoriteUser = viewModel.checkFavoriteUsers(id)
+//            withContext(Dispatchers.Main) {
+//                if (countFavoriteUser != null) {
+//                    if (countFavoriteUser > 0) {
+//                        item.isChecked = true
+//                        check = true
+//                    } else {
+//                        item.isChecked = false
+//                        check = false
+//                        check = false
+//                    }
+//                }
+//            }
+//        }
+///*        if (item.itemId == R.id.action_unfavorite_users) {
+//            if (!check){
+//                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
+//                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
+//            }else{
+//                item.setVisible(false)
+//            }
+//        }
+//        if (item.itemId == R.id.action_favorite_users){
+//            if (check){
+//                viewModel.removeFavoriteUsers(id)
+//                Toast.makeText(this, "Unfavorite", Toast.LENGTH_SHORT).show()
+//                item.isChecked = check
+//            }else {
+//                item.setVisible(false)
+//            }*/
+//
+////        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun showLoading(state: Boolean) {
         if (state) {

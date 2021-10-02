@@ -14,7 +14,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     private var list = arrayListOf<UserModel>()
     private lateinit var viewModel : FavoriteViewModel
-    private lateinit var adapter : UserAdapter
+    private lateinit var adapter : FavoriteUserAdapter
     private lateinit var binding : ActivityFavoriteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class FavoriteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "FAVORITE"
 
-        adapter = UserAdapter(list, this)
+        adapter = FavoriteUserAdapter(list,this)
         adapter.notifyDataSetChanged()
 
         binding.apply {
