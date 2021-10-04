@@ -89,8 +89,10 @@ class DetailUserActivity : AppCompatActivity() {
                 if (countFavoriteUser != null) {
                     binding.btnFavorite.apply {
                         if (countFavoriteUser > 0) {
+                            binding.btnFavorite.isChecked = true
                             checkFavoriteUser = true
                         } else {
+                            binding.btnFavorite.isChecked = false
                             checkFavoriteUser = false
                             checkFavoriteUser = false
                         }
@@ -101,8 +103,6 @@ class DetailUserActivity : AppCompatActivity() {
 
         binding.btnFavorite.setOnClickListener {
             checkFavoriteUser = !checkFavoriteUser
-//            val add = resources.getString(R.string.add_favorite)
-//            val remove = resources.getString(R.string.remove_favorite)
             with(viewModel) {
                 binding.btnFavorite.apply {
                     Log.d("btnFavorite", id.toString())
@@ -112,7 +112,7 @@ class DetailUserActivity : AppCompatActivity() {
                     } else {
                         removeFavoriteUsers(id)
                         Toast.makeText(this@DetailUserActivity, "UNFAVORITE", Toast.LENGTH_SHORT).show()
-                        isClickable = checkFavoriteUser
+                        isChecked = checkFavoriteUser
                     }
                 }
             }
@@ -120,50 +120,51 @@ class DetailUserActivity : AppCompatActivity() {
 
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.menu, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
+/*    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        var check = false
-//        val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
-//        val id = selectUser.id
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val countFavoriteUser = viewModel.checkFavoriteUsers(id)
-//            withContext(Dispatchers.Main) {
-//                if (countFavoriteUser != null) {
-//                    if (countFavoriteUser > 0) {
-//                        item.isChecked = true
-//                        check = true
-//                    } else {
-//                        item.isChecked = false
-//                        check = false
-//                        check = false
-//                    }
-//                }
-//            }
-//        }
-///*        if (item.itemId == R.id.action_unfavorite_users) {
-//            if (!check){
-//                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
-//                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
-//            }else{
-//                item.setVisible(false)
-//            }
-//        }
-//        if (item.itemId == R.id.action_favorite_users){
-//            if (check){
-//                viewModel.removeFavoriteUsers(id)
-//                Toast.makeText(this, "Unfavorite", Toast.LENGTH_SHORT).show()
-//                item.isChecked = check
-//            }else {
-//                item.setVisible(false)
-//            }*/
-//
-////        }
-//        return super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var check = false
+        val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
+        val id = selectUser.id
+        CoroutineScope(Dispatchers.IO).launch {
+            val countFavoriteUser = viewModel.checkFavoriteUsers(id)
+            withContext(Dispatchers.Main) {
+                if (countFavoriteUser != null) {
+                    if (countFavoriteUser > 0) {
+                        item.isChecked = true
+                        check = true
+                    } else {
+                        item.isChecked = false
+                        check = false
+                    }
+                }
+            }
+        }
+*//*        if (item.itemId == R.id.action_unfavorite_users) {
+            if (!check){
+                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
+                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
+            }else{
+                item.setVisible(false)
+            }
+        }*//*
+        if (item.itemId == R.id.action_favorite_users){
+            check = !check
+            if (check){
+                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
+                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
+            }else {
+                viewModel.removeFavoriteUsers(id)
+                Toast.makeText(this, "Unfavorite", Toast.LENGTH_SHORT).show()
+                item.isChecked = check
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
+    }*/
 
     private fun showLoading(state: Boolean) {
         if (state) {

@@ -231,12 +231,16 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animation_loading" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ToggleButton
         android:id="@+id/btnFavorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_love"
-        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/favorite"
+        android:enabled="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
