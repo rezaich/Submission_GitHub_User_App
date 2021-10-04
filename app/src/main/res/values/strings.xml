@@ -15,5 +15,7 @@
     <string name="tab_2">Followings</string>
     <string name="change_language">Change Language</string>
     <string name="favorite">FAVORITE</string>
+    <string name="bahasa_indonesia">Bahasa Indonesia</string>
+    <string name="dark_mode">Dark_mode</string>
 
 </resources>

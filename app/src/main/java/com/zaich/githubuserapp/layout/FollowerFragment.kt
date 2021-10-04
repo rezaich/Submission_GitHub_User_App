@@ -10,6 +10,7 @@ import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.viewmodel.FollowerViewModel
 import com.zaich.githubuserapp.databinding.FragmentFollowBinding
 import com.zaich.githubuserapp.model.UserModel
+import com.zaich.githubuserapp.viewmodel.FavoriteViewModel
 
 class FollowerFragment : Fragment(R.layout.fragment_follow) {
 
@@ -41,10 +42,7 @@ class FollowerFragment : Fragment(R.layout.fragment_follow) {
 
         showLoading(true)
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(FollowerViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FollowerViewModel::class.java)
         viewModel.setFollowers(username)
         viewModel.getFollower().observe(viewLifecycleOwner, {
             if (it != null) {

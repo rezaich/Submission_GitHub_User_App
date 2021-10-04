@@ -1,6 +1,9 @@
 package com.zaich.githubuserapp.viewmodel
 
+import android.app.Application
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zaich.githubuserapp.server.ServerClient
@@ -11,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
 
-class FollowingViewModel : ViewModel() {
+class FollowingViewModel (application: Application) : AndroidViewModel(application){
     private val serverInterface: ServerInterface? = ServerClient().getApiClient()?.create()
     private val followings = MutableLiveData<ArrayList<UserModel>>()
 
@@ -27,6 +30,7 @@ class FollowingViewModel : ViewModel() {
 
                 override fun onFailure(call: Call<ArrayList<UserModel>>, t: Throwable) {
                     Log.d("onFailure", t.message.toString())
+                    Toast.makeText(getApplication(), "onFailure", Toast.LENGTH_SHORT).show()
                 }
             })
     }

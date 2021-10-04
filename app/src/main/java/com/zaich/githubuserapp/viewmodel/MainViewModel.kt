@@ -1,17 +1,23 @@
 package com.zaich.githubuserapp.viewmodel
 
+import android.app.Application
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.zaich.githubuserapp.database.SettingPreferences
 import com.zaich.githubuserapp.model.UserArrayModel
 import com.zaich.githubuserapp.model.UserModel
 import com.zaich.githubuserapp.server.ServerClient
 import com.zaich.githubuserapp.server.ServerInterface
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel (application: Application,private val pref: SettingPreferences) : AndroidViewModel(application) {
     private val serverInterface: ServerInterface =
         ServerClient().getApiClient()!!.create(ServerInterface::class.java)
     private val search = MutableLiveData<ArrayList<UserModel>>()
@@ -28,9 +34,23 @@ class MainViewModel : ViewModel() {
 
             override fun onFailure(call: Call<UserArrayModel>, t: Throwable) {
                 Log.d("Failure", t.message.toString())
+                Toast.makeText(getApplication(), "onFailure", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     fun getSearch(): MutableLiveData<ArrayList<UserModel>> = search
+
+
+    fun saveThemeSetting(isDarkModeActive: Boolean){
+        viewModelScope.launch {
+            pref.saveThemeSetting(isDarkModeActive)
+        }
+    }
+
+    fun saveLanguage(isIndo:Boolean){
+        viewModelScope.launch {
+            pref.savelanguage(isIndo)
+        }
+    }
 }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.databinding.ActivityMainBinding
 import com.zaich.githubuserapp.model.UserModel
+import com.zaich.githubuserapp.viewmodel.FavoriteViewModel
 import com.zaich.githubuserapp.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -41,10 +42,8 @@ class MainActivity : AppCompatActivity() {
         adapter = UserAdapter(list, this)
         adapter.notifyDataSetChanged()
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
 
         binding.apply {
             rvList.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -111,11 +110,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.action_change_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+           startActivity(Intent(this,SettingActivity::class.java))
         }
         if (item.itemId == R.id.action_favorite_users){
-            item.setVisible(true)
             startActivity(Intent(this,FavoriteActivity::class.java))
         }
 

@@ -233,8 +233,8 @@
 
     <ToggleButton
         android:id="@+id/btnFavorite"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="65dp"
         android:background="@drawable/favorite"
         android:enabled="true"
         android:focusable="false"
