@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.map
 class SettingPreferences  private constructor(private val dataStore: DataStore<Preferences>){
 
     private val THEME_KEY = booleanPreferencesKey("theme_setting")
-    private val LANG_KEY  = booleanPreferencesKey("Language_setting")
 
     fun getThemeSetting(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
@@ -20,18 +19,6 @@ class SettingPreferences  private constructor(private val dataStore: DataStore<P
     suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
         dataStore.edit { preferences ->
             preferences[THEME_KEY] = isDarkModeActive
-        }
-    }
-
-    fun getLanguage(): Flow<Boolean>{
-        return dataStore.data.map { preferences ->
-            preferences[LANG_KEY] ?:false
-        }
-    }
-
-    suspend fun savelanguage(isIndo:Boolean){
-        dataStore.edit { preferences ->
-            preferences[LANG_KEY] = isIndo
         }
     }
 

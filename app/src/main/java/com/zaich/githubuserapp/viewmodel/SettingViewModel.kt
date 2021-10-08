@@ -13,19 +13,9 @@ class SettingViewModel (private val pref: SettingPreferences): ViewModel() {
         return pref.getThemeSetting().asLiveData()
     }
 
-    fun getLanguage(): LiveData<Boolean>{
-        return pref.getLanguage().asLiveData()
-    }
-
     fun saveThemeSetting(isDarkModeActive: Boolean){
         viewModelScope.launch {
             pref.saveThemeSetting(isDarkModeActive)
-        }
-    }
-
-    fun saveLanguage(isIndo:Boolean){
-        viewModelScope.launch {
-            pref.savelanguage(isIndo)
         }
     }
 }

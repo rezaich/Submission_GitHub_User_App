@@ -1,8 +1,10 @@
 package com.zaich.githubuserapp.layout
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
@@ -38,23 +40,14 @@ class SettingActivity : AppCompatActivity() {
                     binding.switchTheme.isChecked = false
                 }
             })
-        SettingViewModel.getLanguage().observe(this,
-            { isIndo:Boolean ->
-                if (isIndo){
-                    Locale.setDefault(Locale("in"))
-                    binding.switchLanguage.isChecked =true
-                }else{
-                    Locale.getDefault()
-                    binding.switchLanguage.isChecked = false
-                }
-        })
 
 
         binding.switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             SettingViewModel.saveThemeSetting(isChecked)
         }
-        binding.switchLanguage.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            SettingViewModel.saveLanguage(isChecked)
+        binding.setLang.setOnClickListener {
+            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            startActivity(intent)
         }
     }
 }

@@ -10,10 +10,8 @@ import com.zaich.githubuserapp.database.FavoriteRoomDatabase
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
-
     private var favoriteDB: FavoriteRoomDatabase? = FavoriteRoomDatabase.getFavoriteUsersDB(application)
     private var favoriteDAO: FavoriteDao?=favoriteDB?.favoriteDao()
-
 
     fun getListFavoriteUsers(): LiveData<List<Favorite>>? {
         return favoriteDAO?.getFavoriteUsers()

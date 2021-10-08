@@ -14,16 +14,25 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
+import com.zaich.githubuserapp.database.SettingPreferences
 import com.zaich.githubuserapp.databinding.ActivityMainBinding
+import com.zaich.githubuserapp.databinding.ActivitySettingBinding
 import com.zaich.githubuserapp.model.UserModel
 import com.zaich.githubuserapp.viewmodel.FavoriteViewModel
 import com.zaich.githubuserapp.viewmodel.MainViewModel
+import com.zaich.githubuserapp.viewmodel.SettingViewModel
+import com.zaich.githubuserapp.viewmodel.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     private var list = arrayListOf<UserModel>()
     private lateinit var binding: ActivityMainBinding
@@ -43,6 +52,16 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        viewModel.getSearch().observe(this, {
+            if (it != null) {
+                adapter.setSearchuser(it)
+                showLoading(false)
+            } else {
+                binding.layoutOk.layoutEmpty.visibility = View.VISIBLE
+            }
+        })
+
 
 
         binding.apply {
@@ -76,14 +95,6 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-        viewModel.getSearch().observe(this, {
-            if (it != null) {
-                adapter.setSearchuser(it)
-                showLoading(false)
-            } else {
-                binding.layoutOk.layoutEmpty.visibility = View.VISIBLE
-            }
-        })
     }
 
 

@@ -3,10 +3,7 @@ package com.zaich.githubuserapp.viewmodel
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.zaich.githubuserapp.database.SettingPreferences
 import com.zaich.githubuserapp.model.UserArrayModel
 import com.zaich.githubuserapp.model.UserModel
@@ -17,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel (application: Application,private val pref: SettingPreferences) : AndroidViewModel(application) {
+class MainViewModel (application: Application) : AndroidViewModel(application) {
     private val serverInterface: ServerInterface =
         ServerClient().getApiClient()!!.create(ServerInterface::class.java)
     private val search = MutableLiveData<ArrayList<UserModel>>()
@@ -40,17 +37,4 @@ class MainViewModel (application: Application,private val pref: SettingPreferenc
     }
 
     fun getSearch(): MutableLiveData<ArrayList<UserModel>> = search
-
-
-    fun saveThemeSetting(isDarkModeActive: Boolean){
-        viewModelScope.launch {
-            pref.saveThemeSetting(isDarkModeActive)
-        }
-    }
-
-    fun saveLanguage(isIndo:Boolean){
-        viewModelScope.launch {
-            pref.savelanguage(isIndo)
-        }
-    }
 }

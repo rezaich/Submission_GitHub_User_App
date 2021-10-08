@@ -37,7 +37,6 @@ class DetailUserActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
-//        val username = intent.getStringExtra(EXTRA_USER)
 
         val username = selectUser.username
         val id = selectUser.id
@@ -119,52 +118,6 @@ class DetailUserActivity : AppCompatActivity() {
         }
 
     }
-
-/*    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var check = false
-        val selectUser = intent.getParcelableExtra<UserModel>(EXTRA_USER) as UserModel
-        val id = selectUser.id
-        CoroutineScope(Dispatchers.IO).launch {
-            val countFavoriteUser = viewModel.checkFavoriteUsers(id)
-            withContext(Dispatchers.Main) {
-                if (countFavoriteUser != null) {
-                    if (countFavoriteUser > 0) {
-                        item.isChecked = true
-                        check = true
-                    } else {
-                        item.isChecked = false
-                        check = false
-                    }
-                }
-            }
-        }
-*//*        if (item.itemId == R.id.action_unfavorite_users) {
-            if (!check){
-                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
-                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
-            }else{
-                item.setVisible(false)
-            }
-        }*//*
-        if (item.itemId == R.id.action_favorite_users){
-            check = !check
-            if (check){
-                viewModel.addFavoriteUsers(selectUser.username,selectUser.id,selectUser.html_url,selectUser.avatar)
-                Toast.makeText(this, "FAVORITE", Toast.LENGTH_SHORT).show()
-            }else {
-                viewModel.removeFavoriteUsers(id)
-                Toast.makeText(this, "Unfavorite", Toast.LENGTH_SHORT).show()
-                item.isChecked = check
-            }
-
-        }
-        return super.onOptionsItemSelected(item)
-    }*/
 
     private fun showLoading(state: Boolean) {
         if (state) {
