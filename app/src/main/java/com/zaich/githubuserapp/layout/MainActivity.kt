@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
@@ -32,12 +33,13 @@ import com.zaich.githubuserapp.viewmodel.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     private var list = arrayListOf<UserModel>()
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserAdapter
+
+
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +50,15 @@ class MainActivity : AppCompatActivity() {
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setIcon(R.mipmap.ic_github_foreground)
 
+
+
+        AppCompatDelegate.MODE_NIGHT_YES
+
         adapter = UserAdapter(list, this)
         adapter.notifyDataSetChanged()
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
 
         viewModel.getSearch().observe(this, {
             if (it != null) {

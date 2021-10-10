@@ -37,4 +37,5 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
     }
 
     fun getSearch(): MutableLiveData<ArrayList<UserModel>> = search
+
 }

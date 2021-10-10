@@ -32,7 +32,8 @@ class SettingActivity : AppCompatActivity() {
         )
         SettingViewModel.getThemeSettings().observe(this,
             { isDarkModeActive: Boolean ->
-                if (isDarkModeActive) {
+
+                if (isDarkModeActive ) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     binding.switchTheme.isChecked = true
                 } else {
@@ -40,6 +41,9 @@ class SettingActivity : AppCompatActivity() {
                     binding.switchTheme.isChecked = false
                 }
             })
+
+
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
 
         binding.switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
