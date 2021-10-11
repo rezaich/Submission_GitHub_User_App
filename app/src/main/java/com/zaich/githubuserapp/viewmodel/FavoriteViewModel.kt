@@ -16,5 +16,4 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     fun getListFavoriteUsers(): LiveData<List<Favorite>>? {
         return favoriteDAO?.getFavoriteUsers()
     }
-
 }

@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitHubUserApp">
         <activity
-            android:name=".layout.SettingActivity"
-            android:exported="true" />
-        <activity
             android:name=".layout.FavoriteActivity"
             android:exported="true" />
         <activity
@@ -28,7 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".layout.DetailUserActivity" />
-        <activity android:name=".layout.MainActivity" />
+        <activity android:name=".layout.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

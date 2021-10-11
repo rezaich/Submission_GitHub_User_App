@@ -1,5 +1,6 @@
 package com.zaich.githubuserapp.viewmodel
 
+import android.app.Activity
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
@@ -10,11 +11,12 @@ import com.zaich.githubuserapp.model.UserModel
 import com.zaich.githubuserapp.server.ServerClient
 import com.zaich.githubuserapp.server.ServerInterface
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel (application: Application) : AndroidViewModel(application) {
+class MainViewModel (private val pref: SettingPreferences) :ViewModel() {
     private val serverInterface: ServerInterface =
         ServerClient().getApiClient()!!.create(ServerInterface::class.java)
     private val search = MutableLiveData<ArrayList<UserModel>>()
@@ -31,11 +33,20 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
 
             override fun onFailure(call: Call<UserArrayModel>, t: Throwable) {
                 Log.d("Failure", t.message.toString())
-                Toast.makeText(getApplication(), "onFailure", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     fun getSearch(): MutableLiveData<ArrayList<UserModel>> = search
+
+    fun getThemeSettings(): LiveData<Boolean> {
+        return pref.getThemeSetting().asLiveData()
+    }
+
+    fun saveThemeSetting(isDarkModeActive: Boolean){
+        viewModelScope.launch {
+            pref.saveThemeSetting(isDarkModeActive)
+        }
+    }
 
 }

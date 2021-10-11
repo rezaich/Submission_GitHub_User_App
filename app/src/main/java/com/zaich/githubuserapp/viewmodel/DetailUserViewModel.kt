@@ -45,6 +45,7 @@ class DetailUserViewModel (application: Application) : AndroidViewModel(applicat
 
             override fun onFailure(call: Call<UserDetailModel>, t: Throwable) {
                 Log.d("Failure", t.message.toString())
+                Toast.makeText(getApplication(), "Failure", Toast.LENGTH_SHORT).show()
             }
         })
     }

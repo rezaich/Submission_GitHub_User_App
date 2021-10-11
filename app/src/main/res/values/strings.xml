@@ -14,7 +14,7 @@
     <string name="tab_1">Followers</string>
     <string name="tab_2">Followings</string>
     <string name="favorite">FAVORITE</string>
-    <string name="dark_mode">Dark_mode</string>
+    <string name="dark_mode">Dark Mode</string>
     <string name="change_language">Change Language</string>
 
 </resources>

@@ -6,31 +6,27 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.CompoundButton
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaich.githubuserapp.R
 import com.zaich.githubuserapp.database.SettingPreferences
 import com.zaich.githubuserapp.databinding.ActivityMainBinding
-import com.zaich.githubuserapp.databinding.ActivitySettingBinding
 import com.zaich.githubuserapp.model.UserModel
-import com.zaich.githubuserapp.viewmodel.FavoriteViewModel
 import com.zaich.githubuserapp.viewmodel.MainViewModel
-import com.zaich.githubuserapp.viewmodel.SettingViewModel
 import com.zaich.githubuserapp.viewmodel.ViewModelFactory
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class MainActivity : AppCompatActivity() {
 
 
@@ -38,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserAdapter
-
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -50,15 +45,32 @@ class MainActivity : AppCompatActivity() {
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setIcon(R.mipmap.ic_github_foreground)
 
-
-
-        AppCompatDelegate.MODE_NIGHT_YES
+        val pref = SettingPreferences.getInstance(dataStore)
 
         adapter = UserAdapter(list, this)
         adapter.notifyDataSetChanged()
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(pref)
+        ).get(MainViewModel::class.java)
 
+
+
+        viewModel.getThemeSettings().observe(this,
+            { isDarkModeActive: Boolean ->
+                if (isDarkModeActive) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    binding.switchTheme.isChecked = true
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    binding.switchTheme.isChecked = false
+                }
+            })
+
+        binding.switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            viewModel.saveThemeSetting(isChecked)
+        }
 
         viewModel.getSearch().observe(this, {
             if (it != null) {
@@ -68,7 +80,6 @@ class MainActivity : AppCompatActivity() {
                 binding.layoutOk.layoutEmpty.visibility = View.VISIBLE
             }
         })
-
 
 
         binding.apply {
@@ -128,10 +139,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.action_change_settings) {
-           startActivity(Intent(this,SettingActivity::class.java))
+            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            startActivity(intent)
         }
-        if (item.itemId == R.id.action_favorite_users){
-            startActivity(Intent(this,FavoriteActivity::class.java))
+        if (item.itemId == R.id.action_favorite_users) {
+            startActivity(Intent(this, FavoriteActivity::class.java))
         }
 
         return super.onOptionsItemSelected(item)
